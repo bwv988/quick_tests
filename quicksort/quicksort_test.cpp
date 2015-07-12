@@ -26,7 +26,9 @@ int main()
 
         print_array(array, MAX_NUM);
 
-        // swap(array, 0, 9);
+        quicksort(array, 0, MAX_NUM - 1);
+
+        //swap(array, 0, 9);
         //
         // print_array(array, MAX_NUM);
         //
@@ -37,13 +39,12 @@ int main()
         // swap(array, 2, 3);
         //
         // print_array(array, MAX_NUM);
-
-        
 }
 
 void quicksort(int *a, int lo, int hi)
 {
-        if(a[lo] < a[hi])
+        cout << "Sorting from index " << lo << " to " << hi << endl << endl;
+        if(lo < hi)
         {
                 int p = partition(a, lo, hi);
                 quicksort(a, lo, p - 1);
@@ -56,9 +57,32 @@ int partition(int *a, int lo, int hi)
         int pivot_index = pivot(a, lo, hi);
         int pivot_val = a[pivot_index];
 
-        swap(a, pivot_index, hi);
+        cout << "Pivot value is: " << pivot_val << ", index: " << pivot_index;
 
-        return 0;
+        swap(a, pivot_index, hi);
+        print_array(a, MAX_NUM);
+
+        int store_index = lo;
+
+        for(int i = lo; i < hi - 1; ++i)
+        {
+            cout << "i: " << i;
+
+            if (a[i] < pivot_val)
+            {
+                swap(a, i, store_index);
+                print_array(a, MAX_NUM);
+                store_index++;
+            }
+
+            cout << endl;
+        }
+
+        swap(a, store_index, hi);
+
+        print_array(a, MAX_NUM);
+
+        return store_index;
 }
 
 int pivot(int *a, int lo, int hi)
@@ -72,6 +96,8 @@ int pivot(int *a, int lo, int hi)
 
 void print_array(int *a, int len)
 {
+        cout << endl;
+
         for(int i = 0; i < len; ++i)
         {
                 cout << a[i] << " ";
@@ -83,7 +109,7 @@ void print_array(int *a, int len)
 void swap(int *a, int from_index, int to_index)
 {
         int temp = a[to_index];
-
+        cout << endl << "   swapping " << a[from_index] << " with " << a[to_index] << endl;
         a[to_index] = a[from_index];
         a[from_index] = temp;
 }
