@@ -6,7 +6,9 @@
 
 using namespace std;
 
-int pivot(int *, int, int);
+int pivot(int, int);
+int pivot_rnd(int, int);
+int pivot_left(int, int);
 int partition(int *, int, int);
 void quicksort(int *, int, int);
 void print_array(int *, int);
@@ -28,6 +30,7 @@ int main()
 
         quicksort(array, 0, MAX_NUM - 1);
 
+        // Below is just for testing during development.
         //swap(array, 0, 9);
         //
         // print_array(array, MAX_NUM);
@@ -54,7 +57,7 @@ void quicksort(int *a, int lo, int hi)
 
 int partition(int *a, int lo, int hi)
 {
-        int pivot_index = pivot(a, lo, hi);
+        int pivot_index = pivot(lo, hi);
         int pivot_val = a[pivot_index];
 
         cout << "Pivot value is: " << pivot_val << ", index: " << pivot_index;
@@ -64,7 +67,7 @@ int partition(int *a, int lo, int hi)
 
         int store_index = lo;
 
-        for(int i = lo; i < hi - 1; ++i)
+        for(int i = lo; i <= hi - 1; ++i)
         {
             cout << "i: " << i;
 
@@ -85,13 +88,25 @@ int partition(int *a, int lo, int hi)
         return store_index;
 }
 
-int pivot(int *a, int lo, int hi)
+int pivot(int lo, int hi)
+{
+    return pivot_rnd(lo, hi);
+    //return pivot_left(lo, hi);
+}
+
+
+int pivot_left(int lo, int hi) 
+{
+    return lo;
+}
+
+int pivot_rnd(int lo, int hi)
 {
         random_device rd;
         mt19937 eng(rd());
         uniform_int_distribution<> distr(lo, hi);
 
-        return distr(eng);
+        return distr(eng);   
 }
 
 void print_array(int *a, int len)
